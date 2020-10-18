@@ -3,7 +3,7 @@ import { HomeContainer, TimerBox, Timer } from '../styles/home'
 import moment from 'moment'
 
 export default function Home() {
-  const [counter, setCounter] = useState({ minutes: 25, seconds: 0 });
+  const [counter, setCounter] = useState({ minutes: 10, seconds: 20 });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,7 +32,7 @@ export default function Home() {
           <a>Long Break</a>
         </div>
 
-        <Timer>{`${counter.minutes}:${counter.seconds}`}</Timer>
+        <Timer>{`${counter.minutes}:${counter.seconds >= 10 ? counter.seconds : `0${counter.seconds}`}`}</Timer>
 
         <button>Start</button>
       </TimerBox>
