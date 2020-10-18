@@ -1,9 +1,28 @@
-import Head from 'next/head';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { HomeContainer, TimerBox, Timer } from '../styles/home'
+import moment from 'moment'
 
 export default function Home() {
-  const [timer, setTimer] = useState(25);
+  const [counter, setCounter] = useState({ minutes: 25, seconds: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (counter.seconds === 0) {
+        setCounter({
+          minutes: counter.minutes - 1,
+          seconds: 59
+        })
+      } else {
+        setCounter({
+          minutes: counter.minutes,
+          seconds: counter.seconds - 1
+        })
+      }
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [counter]);
+
   return (
     <HomeContainer>
       <TimerBox>
@@ -13,7 +32,7 @@ export default function Home() {
           <a>Long Break</a>
         </div>
 
-        <Timer>25:00</Timer>
+        <Timer>{`${counter.minutes}:${counter.seconds}`}</Timer>
 
         <button>Start</button>
       </TimerBox>
